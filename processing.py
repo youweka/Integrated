@@ -1,6 +1,7 @@
 from pathlib import Path
 from typing import Dict, List
-from app.models.schemas import FileCategorizationResponse, CategoryCount
+from .schemas import FileCategorizationResponse, CategoryCount
+
 
 class ProcessingService:
     """

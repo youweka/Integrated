@@ -109,3 +109,8 @@ class FileTypeSelectionResponse(BaseModel):
                 "combined_operations": ["map_transactions_to_ui", "generate_combined_report"]
             }
         }
+
+
+# NEW: Request for visualizing a single transaction
+class TransactionVisualizationRequest(BaseModel):
+    transaction_id: str = Field(..., description="The ID of the transaction to visualize")

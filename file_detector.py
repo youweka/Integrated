@@ -1,4 +1,4 @@
-from modules.configManager import detect_file_type as original_detect_file_type
+from .configManager import detect_file_type as original_detect_file_type
 
 def detect_file_type(file_path: str) -> str:
     """

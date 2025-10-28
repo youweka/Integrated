@@ -1,6 +1,6 @@
 from pathlib import Path
 from typing import Dict, List
-from modules.configManager import detect_file_type
+from .configManager import detect_file_type
 
 class CategorizationService:
     """
@@ -50,14 +50,25 @@ class CategorizationService:
     def _detect_category(self, file_path: Path) -> str:
         """
         Detect which category a file belongs to.
-        
-        Args:
-            file_path: Path to the file
-            
-        Returns:
-            Category name or None
         """
+        file_name_lower = file_path.name.lower()
+        
+        # DEBUG
+        print(f"🔍 Checking: {file_path.name} (lowercase: {file_name_lower})")
+        
+        # Check for .reg
+        if file_name_lower.endswith('.reg'):
+            print(f"  ✅ Matched .reg")
+            return 'registry_files'
+        
+        # Check for files with 'reg' in name ending in .txt
+        if file_name_lower.endswith('.txt') and 'reg' in file_name_lower:
+            print(f"  ✅ Matched .txt with reg")
+            return 'registry_files'
+        
+        # Other files
         file_type = detect_file_type(str(file_path))
+        print(f"  📄 Type: {file_type}")
         
         if "Customer Journal" in file_type:
             return 'customer_journals'
@@ -67,9 +78,6 @@ class CategorizationService:
             return 'trc_trace'
         elif "TRC Error" in file_type:
             return 'trc_error'
-        elif (file_path.suffix.lower() == '.reg' or 
-              file_path.name.lower().endswith('reg.txt') or 
-              'registry' in file_path.name.lower()):
-            return 'registry_files'
         
+        print(f"  ❌ No match")
         return None
