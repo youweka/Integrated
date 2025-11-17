@@ -13,6 +13,7 @@ class FileCategorizationResponse(BaseModel):
         ...,
         description="Categorized files by type"
     )
+    acu_extraction_logs: List[str] = Field(default_factory=list, description="Detailed logs from ACU file extraction")
     
     class Config:
         json_schema_extra = {
@@ -27,7 +28,8 @@ class FileCategorizationResponse(BaseModel):
                     "ui_journals": {
                         "count": 1,
                         "files": ["temp_extracted_files/ui.log"]
-                    }
+                    },
+                    "acu_extraction_logs": ["Log entry 1", "Log entry 2"]
                 }
             }
         }
@@ -109,3 +111,8 @@ class FileTypeSelectionResponse(BaseModel):
                 "combined_operations": ["map_transactions_to_ui", "generate_combined_report"]
             }
         }
+
+
+# NEW: Request for visualizing a single transaction
+class TransactionVisualizationRequest(BaseModel):
+    transaction_id: str = Field(..., description="The ID of the transaction to visualize")
